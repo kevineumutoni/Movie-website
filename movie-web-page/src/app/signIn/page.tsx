@@ -2,11 +2,7 @@
 import { useState } from "react";
 import { Box, Button, TextField, Typography, Paper } from "@mui/material";
 
-interface SignInPageProps {
-  onSignIn?: () => void;
-}
-
-const SignInPage = ({ onSignIn }: SignInPageProps) => {
+const Page = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [success, setSuccess] = useState(false);
@@ -14,7 +10,7 @@ const SignInPage = ({ onSignIn }: SignInPageProps) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setSuccess(true);
-    if (onSignIn) onSignIn(); 
+    // Any additional sign-in logic goes here
   };
 
   return (
@@ -130,4 +126,4 @@ const SignInPage = ({ onSignIn }: SignInPageProps) => {
   );
 };
 
-export default SignInPage;
+export default Page;
