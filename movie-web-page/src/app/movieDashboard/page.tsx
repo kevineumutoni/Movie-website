@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import SignInPage from "../signIn/page";
+import SignInPage from "../signIn";
+
 import {
   Box,
   Typography,
@@ -137,11 +138,11 @@ export default function MovieDashboard() {
     return () => clearInterval(timer);
   }, [sliderMovies, showMainBox]);
 
-  if (showSignIn) {
-    return (
-      <SignInPage onSignIn={() => setShowSignIn(false)} />
-    );
-  }
+if (showSignIn) {
+  return (
+    <SignInPage onSignIn={() => setShowSignIn(false)} />
+  );
+}
 
   return (
     <Box sx={{ bgcolor: "#18181b", minHeight: "100vh", color: "#fff", p: 2 }}>

@@ -2,11 +2,8 @@
 import { useState } from "react";
 import { Box, Button, TextField, Typography, Paper } from "@mui/material";
 
-interface SignInPageProps {
-  onSignIn?: () => void;
-}
-
-const SignInPage = ({ onSignIn }: SignInPageProps) => {
+// Add the prop typing here!
+export default function SignInPage({ onSignIn }: { onSignIn?: () => void }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [success, setSuccess] = useState(false);
@@ -14,7 +11,7 @@ const SignInPage = ({ onSignIn }: SignInPageProps) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setSuccess(true);
-    if (onSignIn) onSignIn(); 
+    if (onSignIn) onSignIn();
   };
 
   return (
@@ -128,6 +125,4 @@ const SignInPage = ({ onSignIn }: SignInPageProps) => {
       </Box>
     </Box>
   );
-};
-
-export default SignInPage;
+}
