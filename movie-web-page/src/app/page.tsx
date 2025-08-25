@@ -10,7 +10,7 @@ export default function Home() {
   return (
     <div>
       {!loggedIn ? (
-        <SignInPage />
+        <SignInPage onSignIn={() => setLoggedIn(true)} />
       ) : (
         <>
           <MovieDashboard />

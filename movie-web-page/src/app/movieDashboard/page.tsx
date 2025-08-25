@@ -19,11 +19,11 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import SmartImage from "../smartImage/page";
 import { mockMovies } from "../utils/mockMovies";
+
 import useFetchMovies from "../hooks/useFetchMovies";
 import useFetchRecentMovies from "../hooks/useFetchRecentMovies";
 import useFetchUpcomingMovies from "../hooks/useFetchUpcomingMovies";
 import useSearchMovies from "../hooks/useSearchMovies";
-import { Movie } from "../types/Movie";
 
 const GENRES = ["All"];
 const DEFAULT_IMAGE_URL = "/images/default.png";
@@ -42,8 +42,7 @@ function limitText(text: string, maxWords: number): {
   };
 }
 
-// Strictly type movies!
-function filterMoviesWithImages(movies: Movie[]) {
+function filterMoviesWithImages(movies: any[]) {
   return movies.filter(
     (m) =>
       m.posterUrl &&
@@ -54,9 +53,9 @@ function filterMoviesWithImages(movies: Movie[]) {
 }
 
 export default function MovieDashboard() {
-  const { movies: allMovies = mockMovies } = useFetchMovies();
-  const { movies: recentMovies = mockMovies } = useFetchRecentMovies();
-  const { movies: upcomingMovies = mockMovies } = useFetchUpcomingMovies();
+  const { movies: allMovies = mockMovies, loading: loadingAll } = useFetchMovies();
+  const { movies: recentMovies = mockMovies, loading: loadingRecent } = useFetchRecentMovies();
+  const { movies: upcomingMovies = mockMovies, loading: loadingUpcoming } = useFetchUpcomingMovies();
   const {
     movies: searchedMovies = [],
     loading: loadingSearch,
@@ -92,13 +91,12 @@ export default function MovieDashboard() {
     setShowMainBox(true);
   };
 
-  // Strictly type movies everywhere!
   const filteredAllMovies = filterMoviesWithImages(allMovies);
   const filteredRecentMovies = filterMoviesWithImages(recentMovies).slice(0, 8);
   const filteredUpcomingMovies = filterMoviesWithImages(upcomingMovies);
   const filteredSearchedMovies = filterMoviesWithImages(searchedMovies);
 
-  const sliderMovies: Movie[] =
+  const sliderMovies =
     sort === "recent"
       ? filteredRecentMovies.length
         ? filteredRecentMovies
@@ -107,7 +105,7 @@ export default function MovieDashboard() {
       ? filteredUpcomingMovies
       : filteredAllMovies;
 
-  let displayMovies: Movie[] = sliderMovies;
+  let displayMovies = sliderMovies;
 
   if (showFavorites) {
     displayMovies = displayMovies.filter((m) => favorites.includes(m.id));
@@ -139,7 +137,11 @@ export default function MovieDashboard() {
     return () => clearInterval(timer);
   }, [sliderMovies, showMainBox]);
 
-
+  if (showSignIn) {
+    return (
+      <SignInPage onSignIn={() => setShowSignIn(false)} />
+    );
+  }
 
   return (
     <Box sx={{ bgcolor: "#18181b", minHeight: "100vh", color: "#fff", p: 2 }}>
@@ -256,12 +258,12 @@ export default function MovieDashboard() {
 
       {loadingSearch && searchTerm && (
         <Typography sx={{ mb: 2, color: "#FFC83D", fontSize: 20, fontWeight: 700 }}>
-          Loading results for &quot;{searchTerm}&quot;...
+          Loading results for "{searchTerm}"...
         </Typography>
       )}
       {searchTerm && !loadingSearch && filteredSearchedMovies.length > 0 && (
         <Typography sx={{ mb: 2, color: "#FFC83D", fontSize: 20, fontWeight: 700 }}>
-          Scroll below to see search results for &quot;<b>{searchTerm}</b>&quot;!
+          Scroll below to see search results for "<b>{searchTerm}</b>"!
         </Typography>
       )}
 
