@@ -18,7 +18,7 @@ import {
 } from "@mui/material";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-import SmartImage from "../smartImage/page";
+import SmartImage from "../components/smartImage/page";
 import { mockMovies } from "../utils/mockMovies";
 
 import useFetchMovies from "../hooks/useFetchMovies";
